@@ -32,6 +32,8 @@ Feel free to edit `virtualspace.txt` with any content you like. The program will
 - Detect changes and update its internal record.
 - Restore the file with the latest content if it's deleted.
 
+⚠️ **Alert**: For educational purposes, please ensure that `virtualspace.txt` is in the same directory as the executable when running the program.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
