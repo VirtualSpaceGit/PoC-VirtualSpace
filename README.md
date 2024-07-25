@@ -32,7 +32,7 @@ Feel free to edit `virtualspace.txt` with any content you like. The program will
 - Detect changes and update its internal record.
 - Restore the file with the latest content if it's deleted.
 
-⚠️ **Alert**: For educational purposes, please ensure that `virtualspace.txt` is in the same directory as the executable when running the program.
+⚠️ **Alert**: For educational purposes, please ensure that `virtualspace.txt` is in the same directory as the executable when running the program. This requirement is to simplify the file access logic and demonstrate the core functionality of the VirtualSpace system effectively. In a production environment, the system would be designed to handle files in different directories and include more robust error handling and configuration options.
 
 ## License
 
