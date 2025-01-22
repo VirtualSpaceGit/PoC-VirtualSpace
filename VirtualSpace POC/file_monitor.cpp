@@ -1,7 +1,7 @@
 #include "file_monitor.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include <cstdio>
+#include <filesystem>
+#include <cstdlib>
 #include <thread>
 #include <chrono>
 
@@ -9,25 +9,28 @@ FileMonitor::FileMonitor(const std::string& fileName) : fileName(fileName) {
     if (fileExists()) {
         readFileContent();
         lastWriteTime = getFileWriteTime();
-    }
-    else {
-        std::cerr << "Error: " << fileName << " does not exist. Please create the file with the desired content first." << std::endl;
-        std::exit(1);
+    } else {
+        fprintf(stderr, "Error: %s does not exist. Please create the file with the desired content first.\n", fileName.c_str());
+        exit(1);
     }
 }
 
 void FileMonitor::readFileContent() {
-    std::ifstream inFile(fileName);
-    std::stringstream buffer;
-    buffer << inFile.rdbuf();
-    currentContent = buffer.str();
-    inFile.close();
+    FILE* fp = fopen(fileName.c_str(), "r");
+    if (!fp) return;
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    rewind(fp);
+    currentContent.resize(size);
+    fread(&currentContent[0], 1, size, fp);
+    fclose(fp);
 }
 
 void FileMonitor::createFileWithContent(const std::string& content) {
-    std::ofstream outFile(fileName);
-    outFile << content;
-    outFile.close();
+    FILE* fp = fopen(fileName.c_str(), "w");
+    if (!fp) return;
+    fwrite(content.c_str(), 1, content.size(), fp);
+    fclose(fp);
 }
 
 bool FileMonitor::fileExists() const {
@@ -41,18 +44,17 @@ std::filesystem::file_time_type FileMonitor::getFileWriteTime() const {
 void FileMonitor::monitorFile() {
     while (true) {
         if (!fileExists()) {
-            std::cout << "File " << fileName << " deleted. Restoring..." << std::endl;
+            printf("File %s deleted. Restoring...\n", fileName.c_str());
             createFileWithContent(currentContent);
             lastWriteTime = getFileWriteTime();
-            std::cout << "File restored." << std::endl;
-        }
-        else {
+            printf("File restored.\n");
+        } else {
             auto currentWriteTime = getFileWriteTime();
             if (currentWriteTime != lastWriteTime) {
-                std::cout << "File " << fileName << " modified. Updating content..." << std::endl;
+                printf("File %s modified. Updating content...\n", fileName.c_str());
                 readFileContent();
                 lastWriteTime = currentWriteTime;
-                std::cout << "File content updated." << std::endl;
+                printf("File content updated.\n");
             }
         }
         std::this_thread::sleep_for(std::chrono::seconds(1));
