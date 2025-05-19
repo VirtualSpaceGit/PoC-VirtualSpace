@@ -10,7 +10,7 @@ Welcome to the PoC for VirtualSpace, a dynamic file monitoring and restoration s
 
 ## Overview
 
-VirtualSpace is designed to ensure the integrity and availability of your important data. This Proof of Concept (PoC) serves as a demonstration of our main product, VirtualSpace, highlighting our ability to monitor, dynamically update, and restore files.
+VirtualSpace is designed to ensure the integrity and availability of your important data. This Proof of Concept (PoC) serves as a demonstration of our main product (in very simple terms), VirtualSpace, highlighting our ability to monitor, dynamically update, and restore files.
 
 ## Features
 
