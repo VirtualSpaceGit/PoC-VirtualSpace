@@ -37,7 +37,3 @@ Feel free to edit `virtualspace.txt` with any content you like. The program will
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-Thank you for checking out our PoC for VirtualSpace! We look forward to your feedback and contributions. 🚀
